@@ -1,9 +1,11 @@
 import React, { use } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { AuthContext } from '../provider/AuthContext';
+import useAxios from '../hooks/useAxios';
 
 const Login = () => {
   const {state}=useLocation()
+    const useAxioss = useAxios();
   const navigate=useNavigate()
  /*  console.log("lo", state); */
         const { login, googleSignin } = use(AuthContext);
@@ -29,7 +31,17 @@ const Login = () => {
  const googleSignInHandler=(e)=>{
     e.preventDefault();
     googleSignin()
-      .then(() => {alert("sign in successfully")
+      .then((res) => {alert("sign in successfully")
+ const newUser = {
+   name: res.user.displayName,
+   email: res.user.email,
+   photoURL: res.user.photoURL,
+ };
+ useAxioss
+   .post("/users", newUser)
+   .then((data) => console.log("after add in  mongodb", data.data))
+   .catch((err) => console.log(err));
+        
            navigate(`${state ? state : "/"}`);
       })
       .catch(() => alert("something went wrong"));

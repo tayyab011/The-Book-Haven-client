@@ -2,20 +2,50 @@ import React, { use } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../provider/AuthContext';
 import Loader from './Loader';
+import useAxios from '../hooks/useAxios';
+import { auth } from '../firebase/firebase.init';
 
 const Register = () => {
+  const useAxioss=useAxios();
   const navigate=useNavigate()
-    const { register, googleSignin ,user ,loader ,setLoader} = use(AuthContext);
+    const {
+      register,
+      googleSignin,
+      user,
+      loader,
+      setLoader,
+      updateUsersData,
+      setUser,
+    } = use(AuthContext);
  console.log(user)
  
     const hndlesubmitBtn=async(e)=>{
         e.preventDefault()
 
+const name =e.target.name.value
 const email =e.target.email.value
+const photo =e.target.photo.value
 const password = e.target.password.value;
 await register(email, password).then(res=>{
   console.log(res.user)
+updateUsersData({  displayName:name,photoURL:photo}).then(res=>{
+  console.log(res)
+  setUser({ ...auth.currentUser });
 }).catch(err=>{
+  console.log("for update user",err)
+})
+
+  alert("user create successfully");
+  const newUser = {
+    name: name,
+    email: email,
+    photoURL: photo,
+  };
+useAxioss.post("/users",newUser).then(data=>console.log("after add in  mongodb",data.data)).catch(err=>console.log(err)
+)
+setLoader(false)
+}).catch(err=>{
+  
   console.log(err)
 })
 
@@ -25,28 +55,27 @@ await register(email, password).then(res=>{
     const googleSignUpHandler = (e) => {
       e.preventDefault();
       googleSignin()
-        .then(async (res) => {alert("sign up successfully")
-/* const newUser = {
-     name: res.user.displayName,
-     email: res.user.email,
-     photoURL: res.user.photoURL,
-   };
- */
-/* await fetch("http://localhost:5050/users", {
-   method: "POST",
-   headers: {
-     "content-type": "application/json",
-   },
-   body: JSON.stringify(newUser),
- }).then((res) => res.json()).then((data) =>{
-   navigate("/");
-  console.log("data after user save", data)}); */
+        .then((res) => {alert("sign up successfully")
+          setLoader(false);
+           const newUser = {
+             name: res.user.displayName,
+             email: res.user.email,
+             photoURL: res.user.photoURL,
+           };
+           useAxioss
+             .post("/users", newUser)
+             .then((data) => console.log("after add in  mongodb", data.data))
+             .catch((err) => console.log(err));
 
+
+setLoader(false);
 
 
         })
-        .catch(() => {alert("something went wrong")
-          setLoader(false)
+        .catch(() => {
+           setLoader(false);
+          alert("something went wrong")
+         
         });
     };
     if (loader) {
@@ -61,6 +90,17 @@ await register(email, password).then(res=>{
               <div className="mt-5">
                 <label
                   className="font-semibold text-sm text-gray-600 pb-1 block"
+                  for="name"
+                >
+                  Name
+                </label>
+                <input
+                  className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                  type="text"
+                  name="name"
+                />
+                <label
+                  className="font-semibold text-sm text-gray-600 pb-1 block"
                   for="login"
                 >
                   E-mail
@@ -69,6 +109,17 @@ await register(email, password).then(res=>{
                   className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
                   type="email"
                   name="email"
+                />
+                <label
+                  className="font-semibold text-sm text-gray-600 pb-1 block"
+                  for="login"
+                >
+                  PhotoURL
+                </label>
+                <input
+                  className="border rounded-lg px-3 py-2 mt-1 mb-5 text-sm w-full"
+                  type="text"
+                  name="photo"
                 />
                 <label
                   className="font-semibold text-sm text-gray-600 pb-1 block"
@@ -82,7 +133,7 @@ await register(email, password).then(res=>{
                   name="password"
                 />
               </div>
-             
+
               <div className="flex justify-center w-full items-center">
                 <div>
                   <button

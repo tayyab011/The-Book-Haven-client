@@ -8,21 +8,25 @@ const Navbar = () => {
     
 
         const link = (
-      <>
-        <li>
-          <NavLink> Home</NavLink>
-        </li>
-        <li>
-          <NavLink> All Books</NavLink>
-        </li>
-        <li>
-          <NavLink> Add Book</NavLink>
-        </li>
-        <li>
-          <NavLink> My Books</NavLink>
-        </li>
-      </>
-    );
+          <>
+            <li>
+              <NavLink> Home</NavLink>
+            </li>
+            <li>
+              <NavLink> All Books</NavLink>
+            </li>
+            {user && (
+              <>
+                <li>
+                  <NavLink> Add Book</NavLink>
+                </li>
+                <li>
+                  <NavLink> My Books</NavLink>
+                </li>
+              </>
+            )}
+          </>
+        );
     
     return (
       <div>
