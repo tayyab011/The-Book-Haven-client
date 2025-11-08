@@ -5,7 +5,7 @@ import { AuthContext } from '../provider/AuthContext';
 const Login = () => {
   const {state}=useLocation()
   const navigate=useNavigate()
-  console.log("lo", state);
+ /*  console.log("lo", state); */
         const { login, googleSignin } = use(AuthContext);
  const hndlesubmitLoginBtn = (e) => {
    e.preventDefault();
@@ -160,10 +160,11 @@ const Login = () => {
               </div>
               <div className="mt-5">
                 <button
-                  className="py-2 px-4 w-full text-center btn-primary"
+                  className="py-2 px-4 w-full text-center ui-btn"
                   type="submit"
                 >
-                  Log in
+               
+                  <span>Log in</span>
                 </button>
               </div>
               <div className="flex items-center justify-between mt-4">

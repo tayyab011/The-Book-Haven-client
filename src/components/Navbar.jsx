@@ -1,9 +1,32 @@
-import React from 'react';
+import React, { use } from 'react';
+import { NavLink } from 'react-router';
+import { AuthContext } from '../provider/AuthContext';
 
 const Navbar = () => {
+    const { user, logout } = use(AuthContext);
+
+    
+
+        const link = (
+      <>
+        <li>
+          <NavLink> Home</NavLink>
+        </li>
+        <li>
+          <NavLink> All Books</NavLink>
+        </li>
+        <li>
+          <NavLink> Add Book</NavLink>
+        </li>
+        <li>
+          <NavLink> My Books</NavLink>
+        </li>
+      </>
+    );
+    
     return (
       <div>
-        <div className="navbar bg-base-100 shadow-sm">
+        <div className="navbar shadow-sm">
           <div className="navbar-start">
             <div className="dropdown">
               <div
@@ -31,52 +54,47 @@ const Navbar = () => {
                 tabIndex="-1"
                 className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
               >
-                <li>
-                  <a>Item 1</a>
-                </li>
-                <li>
-                  <a>Parent</a>
-                  <ul className="p-2">
-                    <li>
-                      <a>Submenu 1</a>
-                    </li>
-                    <li>
-                      <a>Submenu 2</a>
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <a>Item 3</a>
-                </li>
+                {link}
               </ul>
             </div>
             <a className="btn btn-ghost text-xl">daisyUI</a>
           </div>
           <div className="navbar-center hidden lg:flex">
-            <ul className="menu menu-horizontal px-1">
-              <li>
-                <a>Item 1</a>
-              </li>
-              <li>
-                <details>
-                  <summary>Parent</summary>
-                  <ul className="p-2">
-                    <li>
-                      <a>Submenu 1</a>
-                    </li>
-                    <li>
-                      <a>Submenu 2</a>
-                    </li>
-                  </ul>
-                </details>
-              </li>
-              <li>
-                <a>Item 3</a>
-              </li>
-            </ul>
+            <ul className="menu menu-horizontal px-1">{link}</ul>
           </div>
           <div className="navbar-end">
-            <a className="btn">Button</a>
+            {user ? (
+              <>
+                <a onClick={logout} className="btn mr-4">
+                  Logout
+                </a>
+                <div className="dropdown dropdown-hover  cursor-pointer">
+                  <img
+                    src={user?.photoURL}
+                    alt=""
+                    tabIndex={0}
+                    role="button"
+                    className="w-8 h-8 rounded-full cursor-pointer"
+                  />
+                  <ul
+                    tabIndex="-1"
+                    className="dropdown-content menu bg-base-100 w-40 rounded-box z-1 p-2 shadow-sm right-12"
+                  >
+                    {user?.displayName}
+                  </ul>
+                </div>
+              </>
+            ) : (
+              <>
+                <NavLink to="/login" className="btn ui-btn mr-4">
+                
+                  <span> Login</span>
+                </NavLink>
+                <NavLink to="/register" className="btn ui-btn">
+                  <span> Register</span>
+                </NavLink>
+              </>
+            )}
           </div>
         </div>
       </div>

@@ -13,30 +13,12 @@ const Register = () => {
 
 const email =e.target.email.value
 const password = e.target.password.value;
-await register(email, password).then(async res=>{
-    alert("user created successfull")
-   const newUser = {
-     name: res.user.displayName,
-     email: res.user.email,
-     photoURL: res.user.photoURL,
-   };
+await register(email, password).then(res=>{
+  console.log(res.user)
+}).catch(err=>{
+  console.log(err)
+})
 
-await fetch("http://localhost:5050/users", {
-   method: "POST",
-   headers: {
-     "content-type": "application/json",
-   },
-   body: JSON.stringify(newUser),
- }).then((res) => res.json()).then((data) => {
-  navigate("/")
-  console.log("data after user save", data)});
-
-    console.log(res.user)}).catch(err=>{
-        if (err.code === "auth/email-already-in-use") {
-          alert("user exist");
-        }
-        
-        console.log(err.code)})
     }
 
 
@@ -44,13 +26,13 @@ await fetch("http://localhost:5050/users", {
       e.preventDefault();
       googleSignin()
         .then(async (res) => {alert("sign up successfully")
-const newUser = {
+/* const newUser = {
      name: res.user.displayName,
      email: res.user.email,
      photoURL: res.user.photoURL,
    };
-
-await fetch("http://localhost:5050/users", {
+ */
+/* await fetch("http://localhost:5050/users", {
    method: "POST",
    headers: {
      "content-type": "application/json",
@@ -58,7 +40,7 @@ await fetch("http://localhost:5050/users", {
    body: JSON.stringify(newUser),
  }).then((res) => res.json()).then((data) =>{
    navigate("/");
-  console.log("data after user save", data)});
+  console.log("data after user save", data)}); */
 
 
 
@@ -100,14 +82,7 @@ await fetch("http://localhost:5050/users", {
                   name="password"
                 />
               </div>
-              <div className="text-right mb-4">
-                <a
-                  className="text-xs font-display font-semibold text-gray-500 hover:text-gray-600 cursor-pointer"
-                  href="#"
-                >
-                  Forgot Password?
-                </a>
-              </div>
+             
               <div className="flex justify-center w-full items-center">
                 <div>
                   <button
@@ -195,10 +170,10 @@ await fetch("http://localhost:5050/users", {
               </div>
               <div className="mt-5">
                 <button
-                  className="py-2 px-4 w-full text-center btn-primary"
+                  className="py-2 px-4 w-full text-center ui-btn"
                   type="submit"
                 >
-                  Register
+                  <span>Registration</span>
                 </button>
               </div>
               <div className="flex items-center justify-between mt-4">
