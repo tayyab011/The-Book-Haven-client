@@ -13,6 +13,7 @@ import AddBook from "./components/AddBook.jsx";
 import AllBooks from './components/AllBooks';
 import BookDetails from './components/BookDetails';
 import AddMyBooks from './components/AddMyBooks';
+import PrivateRoute from "./Layout/PrivateRoute.jsx";
 
 const router = createBrowserRouter([
   {
@@ -25,20 +26,32 @@ const router = createBrowserRouter([
       },
       {
         path: "/addBook",
-        element: <AddBook />,
+        element: (
+          <PrivateRoute>
+            <AddBook />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/allBooks",
-        element: <AllBooks/>,
+        element: <AllBooks />,
       },
       {
         path: "/boookDetails/:id",
-   loader:({params})=> fetch(`http://localhost:5050/books/${params.id}`),
-        element: <BookDetails/>,
+
+        element: (
+          <PrivateRoute>
+            <BookDetails />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/myBook",
-        element: <AddMyBooks/>,
+        element: (
+          <PrivateRoute>
+            <AddMyBooks />
+          </PrivateRoute>
+        ),
       },
 
       {

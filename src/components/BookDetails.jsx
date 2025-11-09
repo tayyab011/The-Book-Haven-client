@@ -1,54 +1,64 @@
 import React from 'react';
-import { useLoaderData, useNavigate } from 'react-router';
+import { useEffect } from 'react';
+import { useLoaderData, useNavigate, useParams } from 'react-router';
+import useSpecialAxios from '../hooks/useSpecialAxios';
+import { useState } from 'react';
 
 const BookDetails = () => {
-    const navigate=useNavigate()
-   const data=useLoaderData()
-    const {
-      title,
-      author,
-      genre,
-      rating,
-      summary,
-      coverImage,
-      userEmail,
-      userName,
-      _id
-    } = data.result;
-    console.log(_id);
+   const navigate = useNavigate();
+  const specialaxios=useSpecialAxios();
+  const [data,setData]=useState(null)
+  const {id}=useParams();
+
+  
+ /*  console.log(id) */
+  useEffect(()=>{
+specialaxios
+  .get(`/books/${id}`)
+  .then((data) =>{ setData(data.data.result)})
+  .catch((err) => console.log(err));
+  },[id,specialaxios])
+
+ 
     return (
       <div>
-        <title>{title}</title>
+        <title> {data?.title}</title>
         <div className="w-11/12 mx-auto my-10">
           <div className="card lg:card-side ">
             <figure className="lg:w-1/2 p-3 shadow">
               <img
-                src={coverImage}
-                alt={title}
+                src={data?.coverImage}
+                alt=""
                 className="w-50 h-80  object-cover rounded-xl"
               />
             </figure>
 
             <div className="card-body lg:w-1/2 space-y-3">
               <h2 className="card-title text-3xl font-black gradient-text">
-                {title}
+                {data?.title}
               </h2>
-              <p className="gradient-text font-bold">{summary}</p>
+              <p className="gradient-text font-bold"> {data?.summary}</p>
 
               <div className="">
                 <p>
                   <span className="font-black">Author:</span>{" "}
-                  <span className="gradient-text font-bold">{author}</span>
+                  <span className="gradient-text font-bold">
+                    {data?.author}
+                  </span>
                 </p>
                 <p>
                   <span className="font-black">Genre:</span>{" "}
-                  <span className="gradient-text font-bold">{genre}</span>
+                  <span className="gradient-text font-bold">
+                    {" "}
+                    {data?.genre}
+                  </span>
                 </p>
                 <p>
                   <span className="font-black">Ratings:</span>{" "}
-                  <span className="gradient-text font-bold">⭐ {rating}</span>
+                  <span className="gradient-text font-bold">
+                    ⭐ {data?.rating}
+                  </span>
                 </p>
-                
               </div>
 
               <div className="card-actions justify-start mt-6">

@@ -6,6 +6,7 @@ import { useState } from "react";
 import useSpecialAxios from "../hooks/useSpecialAxios";
 
 const AddMyBooks = () => {
+
     const {user}=use(AuthContext)
     const [book,setBook]=useState([])
     const specialaxios=useSpecialAxios()
@@ -14,6 +15,7 @@ specialaxios
   .get(`/booksByUser?email=${user?.email}`)
   .then((data) => setBook(data.data));
     },[user,specialaxios])
+
   return (
     <div className="w-11/12 mx-auto my-8">
       {/* responsive wrapper */}
@@ -32,7 +34,7 @@ specialaxios
           {/* table body */}
           <tbody>
             {book.map((book) => (
-              <tr className="hover:bg-pink-50 transition">
+              <tr key={book._id} className="hover:bg-pink-50 transition">
                 <td>
                   <div className="flex items-center gap-3">
                     <div className="avatar">
@@ -46,7 +48,10 @@ specialaxios
                 <td>{book?.author}</td>
                 <td>
                   <div className="flex flex-wrap justify-center gap-2">
-                    <button className="btn btn-xs sm:btn-sm bg-blue-500 text-white hover:bg-blue-600">
+                    <button
+                     
+                      className="btn btn-xs sm:btn-sm bg-blue-500 text-white hover:bg-blue-600"
+                    >
                       Update
                     </button>
                     <button className="btn btn-xs sm:btn-sm bg-red-500 text-white hover:bg-red-600">
@@ -59,8 +64,10 @@ specialaxios
           </tbody>
         </table>
       </div>
+      
     </div>
   );
 };
 
 export default AddMyBooks;
+
