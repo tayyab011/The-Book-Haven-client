@@ -5,7 +5,7 @@ import { AuthContext } from '../provider/AuthContext';
 const Navbar = () => {
     const { user, logout } = use(AuthContext);
 
-    
+ 
 
         const link = (
           <>
@@ -13,7 +13,7 @@ const Navbar = () => {
               <NavLink> Home</NavLink>
             </li>
             <li>
-              <NavLink> All Books</NavLink>
+              <NavLink to="/allBooks"> All Books</NavLink>
             </li>
             {user && (
               <>

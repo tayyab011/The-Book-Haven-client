@@ -10,6 +10,7 @@ import AuthProvider from "./provider/AuthProvider.jsx";
 import Login from "./components/Login";
 import Register from "./components/Register.jsx";
 import AddBook from "./components/AddBook.jsx";
+import AllBooks from './components/AllBooks';
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,15 @@ const router = createBrowserRouter([
       {
         path: "/addBook",
         element: <AddBook />,
+      },
+      {
+        path: "/allBooks",
+        element: <AllBooks/>,
+      },
+      {
+        path: "/boookDetails/:id",
+   /*   loader:()=> */
+        element: <AllBooks/>,
       },
 
       {
