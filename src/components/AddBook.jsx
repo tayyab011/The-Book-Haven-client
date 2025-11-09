@@ -1,14 +1,44 @@
-import React from 'react';
+import React, { use } from 'react';
+import { AuthContext } from '../provider/AuthContext';
+import useAxios from '../hooks/useAxios';
 
 const AddBook = () => {
+  const {user}=use(AuthContext)
+  const useaxioss=useAxios()
+
+  const onBookSubmitHandler=async (e)=>{
+    e.preventDefault()
+ const name =e.target.name.value
+ const email = e.target.email.value;
+ const title = e.target.title.value;
+ const author = e.target.author.value;
+ const genre = e.target.genre.value;
+ const rating = e.target.rating.value;
+ const summary = e.target.summary.value;
+ const image = e.target.image.value;
+
+const newBook = {
+  userName: name,
+  userEmail: email,
+  title: title,
+  author: author,
+  genre: genre,
+  rating: rating,
+  summary: summary,
+  coverImage:image,
+};
+
+await useaxioss.post("/books",newBook).then(data => console.log("after added book in mongodb",data.data)).catch(err=>console.log(err))
+console.log(newBook)
+  }
     return (
       <div>
         <section className="text-gray-600 body-font relative">
-          <form >
+          <form onSubmit={onBookSubmitHandler}>
             <div className="container px-5 py-24 mx-auto">
               <div className="flex flex-col text-center w-full mb-12">
                 <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">
-                  Contact Us
+                  Add Books
                 </h1>
                 <p className="lg:w-2/3 mx-auto leading-relaxed text-base">
                   Whatever cardigan tote bag tumblr hexagon brooklyn
@@ -23,7 +53,41 @@ const AddBook = () => {
                         for="name"
                         className="leading-7 text-sm text-gray-600"
                       >
-                        Product Name
+                        User Name
+                      </label>
+                      <input
+                        type="text"
+                        name="name"
+                        disabled={true}
+                        defaultValue={user?.displayName}
+                        className="w-full bg-gray-100 cursor-not-allowed bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                      />
+                    </div>
+                  </div>
+                  <div className="p-2 w-1/2">
+                    <div className="relative">
+                      <label
+                        for="email"
+                        className="leading-7 text-sm text-gray-600"
+                      >
+                        User Email
+                      </label>
+                      <input
+                        type="email"
+                        disabled={true}
+                        defaultValue={user?.email}
+                        name="email"
+                        className="w-full bg-gray-100 cursor-not-allowed bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                      />
+                    </div>
+                  </div>
+                  <div className="p-2 w-1/2">
+                    <div className="relative">
+                      <label
+                        for="title"
+                        className="leading-7 text-sm text-gray-600"
+                      >
+                        Title
                       </label>
                       <input
                         type="text"
@@ -35,14 +99,14 @@ const AddBook = () => {
                   <div className="p-2 w-1/2">
                     <div className="relative">
                       <label
-                        for="email"
+                        for="author"
                         className="leading-7 text-sm text-gray-600"
                       >
-                        Email
+                        Author
                       </label>
                       <input
-                        type="email"
-                        name="email"
+                        type="text"
+                        name="author"
                         className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                       />
                     </div>
@@ -50,14 +114,14 @@ const AddBook = () => {
                   <div className="p-2 w-1/2">
                     <div className="relative">
                       <label
-                        for="category"
+                        for="genre"
                         className="leading-7 text-sm text-gray-600"
                       >
-                        category
+                        Genre
                       </label>
                       <input
                         type="text"
-                        name="category"
+                        name="genre"
                         className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                       />
                     </div>
@@ -65,14 +129,14 @@ const AddBook = () => {
                   <div className="p-2 w-1/2">
                     <div className="relative">
                       <label
-                        for="status"
+                        for="rating"
                         className="leading-7 text-sm text-gray-600"
                       >
-                        status
+                        Rating
                       </label>
                       <input
                         type="text"
-                        name="status"
+                        name="rating"
                         className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                       />
                     </div>
@@ -80,14 +144,14 @@ const AddBook = () => {
                   <div className="p-2 w-1/2">
                     <div className="relative">
                       <label
-                        for="email"
+                        for="summary"
                         className="leading-7 text-sm text-gray-600"
                       >
-                        price_min
+                        Summary
                       </label>
                       <input
                         type="text"
-                        name="price_min"
+                        name="summary"
                         className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                       />
                     </div>
@@ -95,14 +159,14 @@ const AddBook = () => {
                   <div className="p-2 w-1/2">
                     <div className="relative">
                       <label
-                        for="email"
+                        for="image"
                         className="leading-7 text-sm text-gray-600"
                       >
-                        price_max
+                        Image
                       </label>
                       <input
                         type="text"
-                        name="price_max"
+                        name="image"
                         className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                       />
                     </div>
@@ -110,9 +174,9 @@ const AddBook = () => {
                   <div className="p-2 w-full">
                     <button
                       type="submit"
-                      className="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+                      className="flex mx-auto text-white ui-btn rounded-md "
                     >
-                      Button
+                      <span>Add Book</span>
                     </button>
                   </div>
                 </div>
