@@ -1,10 +1,11 @@
 import React, { use } from 'react';
 import { AuthContext } from '../provider/AuthContext';
 import useAxios from '../hooks/useAxios';
+import useSpecialAxios from '../hooks/useSpecialAxios';
 
 const AddBook = () => {
   const {user}=use(AuthContext)
-  const useaxioss=useAxios()
+  const useaxioss=useSpecialAxios()
 
   const onBookSubmitHandler=async (e)=>{
     e.preventDefault()

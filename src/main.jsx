@@ -11,6 +11,8 @@ import Login from "./components/Login";
 import Register from "./components/Register.jsx";
 import AddBook from "./components/AddBook.jsx";
 import AllBooks from './components/AllBooks';
+import BookDetails from './components/BookDetails';
+import AddMyBooks from './components/AddMyBooks';
 
 const router = createBrowserRouter([
   {
@@ -31,8 +33,12 @@ const router = createBrowserRouter([
       },
       {
         path: "/boookDetails/:id",
-   /*   loader:()=> */
-        element: <AllBooks/>,
+   loader:({params})=> fetch(`http://localhost:5050/books/${params.id}`),
+        element: <BookDetails/>,
+      },
+      {
+        path: "/myBook",
+        element: <AddMyBooks/>,
       },
 
       {
