@@ -1,12 +1,16 @@
-import React, { use } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { NavLink } from 'react-router';
 import { AuthContext } from '../provider/AuthContext';
 
 const Navbar = () => {
     const { user, logout } = use(AuthContext);
 
- 
-
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "autumn");
+ useEffect(() => {
+   const html = document.querySelector("html");
+   html.setAttribute("data-theme", theme);
+   localStorage.setItem("theme", theme);
+ }, [theme]);
         const link = (
           <>
             <li>
@@ -15,6 +19,7 @@ const Navbar = () => {
             <li>
               <NavLink to="/allBooks"> All Books</NavLink>
             </li>
+
             {user && (
               <>
                 <li>
@@ -27,7 +32,10 @@ const Navbar = () => {
             )}
           </>
         );
-    
+      const handleTheme = (checked) => {
+        setTheme(checked ? "dark" : "autumn");
+      };
+
     return (
       <div>
         <div className="navbar shadow-sm">
@@ -67,31 +75,51 @@ const Navbar = () => {
             <ul className="menu menu-horizontal px-1">{link}</ul>
           </div>
           <div className="navbar-end">
+            <input
+              onChange={(e) => handleTheme(e.target.checked)}
+              type="checkbox"
+              defaultChecked={localStorage.getItem("theme") === "dark"}
+              className="toggle mr-4"
+            />
             {user ? (
               <>
-                <a onClick={logout} className="btn mr-4">
+                {/*  <a onClick={logout} className="btn mr-4">
                   Logout
-                </a>
-                <div className="dropdown dropdown-hover  cursor-pointer">
-                  <img
-                    src={user?.photoURL}
-                    alt=""
+                </a> */}
+                <div className="dropdown dropdown-end">
+                  <div
                     tabIndex={0}
                     role="button"
-                    className="w-8 h-8 rounded-full cursor-pointer"
-                  />
+                    className="btn btn-ghost btn-circle avatar"
+                  >
+                    <div className="w-10 rounded-full">
+                      <img alt="user" src={user?.photoURL} />
+                    </div>
+                  </div>
                   <ul
                     tabIndex="-1"
-                    className="dropdown-content menu bg-base-100 w-40 rounded-box z-1 p-2 shadow-sm right-12"
+                    className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow "
                   >
-                    {user?.displayName}
+                    <li>
+                      <a className="justify-between hover:bg-gray-100 hover:text-black">
+                        {user.displayName || "Profile"}
+                      </a>
+                    </li>
+
+                    <li>
+                      <button
+                        className="hover:bg-gray-100 hover:text-black"
+                        onClick={logout}
+                      >
+                        Logout
+                      </button>
+                    </li>
                   </ul>
                 </div>
               </>
             ) : (
               <>
                 <NavLink to="/login" className="btn ui-btn mr-4">
-                
                   <span> Login</span>
                 </NavLink>
                 <NavLink to="/register" className="btn ui-btn">

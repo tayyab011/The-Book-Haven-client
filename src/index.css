@@ -1,16 +1,20 @@
 @import "tailwindcss";
+@plugin "daisyui" ;
 
 
 @plugin "daisyui" {
-themes: light --default;
 
-/* --color-primary: blue;
-  --color-secondary: teal; */
-}
-body{
- background-image: url("../public/coolbackgrounds-gradient-astral.png");
-}
+   themes: autumn --default, dark --prefersdark;
 
+ }
+
+ @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+/* *{
+ background: linear-gradient(to left top, #c3d0e3, #c4d2e4, #c4d5e6, #c5d7e7, #c6d9e8);
+} */
+.bg-soft-sky {
+    @apply bg-gradient-to-tl from-[#c3d0e3] via-[#c4d5e6] to-[#c6d9e8];
+  }
 .ui-btn {
   --btn-default-bg: rgb(41, 41, 41);
   --btn-padding: 15px 20px;
@@ -168,3 +172,16 @@ body{
     right: 0;
   }
 }
+
+@media (max-width: 570px) {
+.ui-btn {
+  padding: 3px 6px;
+  font-size: 13px;
+
+}
+.toggle{
+  width: 30px;
+}
+}
+
+/* <div className={`${theme === "light" && "bg-soft-sky"}`}> */

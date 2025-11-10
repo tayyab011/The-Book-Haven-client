@@ -5,13 +5,13 @@ import { useLoaderData } from 'react-router';
 
 const Home = () => {
     const sortData=useLoaderData()
-  
-    return (
-      <div>
-        <Banner />
-        <div className='w-11/12 mx-auto my-5'>
+  const theme =localStorage.getItem("theme")
 
-        <SortedBooks sortBooks={sortData.result} />
+    return (
+      <div className={`${theme === "light" && "bg-soft-sky"}`}>
+        <Banner />
+        <div className="w-11/12 mx-auto my-5">
+          <SortedBooks sortBooks={sortData.result} />
         </div>
       </div>
     );

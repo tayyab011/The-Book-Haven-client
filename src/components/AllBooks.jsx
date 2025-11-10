@@ -37,9 +37,9 @@ await fetch("http://localhost:5050/booksSortedAssending")
    .then((res) => res.json())
    .then((data) => console.log("after sorting", setBook(data.result)));
   }  
-};
+}
     return (
-      <div className="w-11/12 mx-auto  my-5 overflow-x-auto">
+      <div className={`w-11/12 mx-auto  my-5 overflow-x-auto `}>
         <div className="overflow-x-auto w-full">
           <div className="flex justify-between">
             <h1>All Books</h1>
