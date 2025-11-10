@@ -14,6 +14,7 @@ import AllBooks from './components/AllBooks';
 import BookDetails from './components/BookDetails';
 import AddMyBooks from './components/AddMyBooks';
 import PrivateRoute from "./Layout/PrivateRoute.jsx";
+import UpdateBook from "./components/UpdateBook.jsx";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <AddBook />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/update-book/:id",
+        element: (
+          <PrivateRoute>
+            <UpdateBook/>
           </PrivateRoute>
         ),
       },

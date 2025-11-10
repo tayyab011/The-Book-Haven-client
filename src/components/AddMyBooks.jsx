@@ -4,9 +4,10 @@ import { useEffect } from "react";
 import { AuthContext } from "../provider/AuthContext";
 import { useState } from "react";
 import useSpecialAxios from "../hooks/useSpecialAxios";
+import { useNavigate } from "react-router";
 
 const AddMyBooks = () => {
-
+const navigate=useNavigate()
     const {user}=use(AuthContext)
     const [book,setBook]=useState([])
     const specialaxios=useSpecialAxios()
@@ -49,7 +50,7 @@ specialaxios
                 <td>
                   <div className="flex flex-wrap justify-center gap-2">
                     <button
-                     
+                      onClick={() => navigate(`/update-book/${book._id}`)}
                       className="btn btn-xs sm:btn-sm bg-blue-500 text-white hover:bg-blue-600"
                     >
                       Update
@@ -64,7 +65,6 @@ specialaxios
           </tbody>
         </table>
       </div>
-      
     </div>
   );
 };
