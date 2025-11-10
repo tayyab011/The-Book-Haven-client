@@ -5,6 +5,7 @@ import { AuthContext } from "../provider/AuthContext";
 import { useState } from "react";
 import useSpecialAxios from "../hooks/useSpecialAxios";
 import { useNavigate } from "react-router";
+import Swal from "sweetalert2";
 
 const AddMyBooks = () => {
 const navigate=useNavigate()
@@ -17,6 +18,29 @@ specialaxios
   .then((data) => setBook(data.data));
     },[user,specialaxios])
 
+    const deleteHandler=(id)=>{
+Swal.fire({
+  title: "Are you sure?",
+  text: "You won't be able to revert this!",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  cancelButtonColor: "#d33",
+  confirmButtonText: "Yes, delete it!",
+}).then((result) => {
+  if (result.isConfirmed) {
+    specialaxios.delete(`/booksByUser/${id}`).then(data=>{console.log(data)
+      const remainingData=book.filter(data=>data._id != id)
+      setBook(remainingData);
+    })
+    Swal.fire({
+      title: "Deleted!",
+      text: "Your file has been deleted.",
+      icon: "success",
+    });
+  }
+});
+    }
   return (
     <div className="w-11/12 mx-auto my-8">
       {/* responsive wrapper */}
@@ -55,7 +79,10 @@ specialaxios
                     >
                       Update
                     </button>
-                    <button className="btn btn-xs sm:btn-sm bg-red-500 text-white hover:bg-red-600">
+                    <button
+                      onClick={() => deleteHandler(book._id)}
+                      className="btn btn-xs sm:btn-sm bg-red-500 text-white hover:bg-red-600"
+                    >
                       Delete
                     </button>
                   </div>

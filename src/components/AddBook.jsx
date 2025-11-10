@@ -26,9 +26,10 @@ const newBook = {
   genre: genre,
   rating: rating,
   summary: summary,
-  coverImage:image,
+  coverImage: image,
+  createdAt: new Date(),
 };
-
+//aad
 await useaxioss.post("/books",newBook).then(data => console.log("after added book in mongodb",data.data)).catch(err=>console.log(err))
 console.log(newBook)
   }

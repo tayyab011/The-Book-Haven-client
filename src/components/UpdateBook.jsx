@@ -1,9 +1,10 @@
 import React, { use, useEffect, useState } from 'react';
 import { AuthContext } from '../provider/AuthContext';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import useSpecialAxios from '../hooks/useSpecialAxios';
 
 const UpdateBook = () => {
+    const navigate=useNavigate()
     const {user}=use(AuthContext)
     const [old,setOld]=useState({})
     const specialaxios=useSpecialAxios()
@@ -42,6 +43,7 @@ const UpdateBook = () => {
 
 await specialaxios.put(`/booksByUser/${id}`,newBook).then(data=> {
     console.log("after update",data.data)
+    navigate("/myBook");
 }).catch(err=>console.log(err))
     }
     return (
