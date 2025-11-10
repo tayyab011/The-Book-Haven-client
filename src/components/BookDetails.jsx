@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { use } from 'react';
 import { useEffect } from 'react';
 import { useLoaderData, useNavigate, useParams } from 'react-router';
 import useSpecialAxios from '../hooks/useSpecialAxios';
 import { useState } from 'react';
+import { AuthContext } from '../provider/AuthContext';
 
 const BookDetails = () => {
+  const {user}=use(AuthContext)
+
    const navigate = useNavigate();
+   const [comment,setComment]=useState([])
   const specialaxios=useSpecialAxios();
   const [data,setData]=useState(null)
   const {id}=useParams();
@@ -15,11 +19,32 @@ const BookDetails = () => {
   useEffect(()=>{
 specialaxios
   .get(`/books/${id}`)
-  .then((data) =>{ setData(data.data.result)})
+  .then((data) =>{ 
+    setData(data.data.result)
+    setComment(data.data.result.comments);
+  })
   .catch((err) => console.log(err));
   },[id,specialaxios])
 
- 
+ const commentData =async (e)=>{
+e.preventDefault()
+const comment=e.target.comment.value;
+const newComment = {
+  userName: user?.displayName,
+  userPhoto: user?.photoURL,
+  comment: comment,
+};
+await specialaxios
+  .post(`/books/${id}/comments`, newComment)
+  .then((data) => {
+   
+      setComment((prev) => [...prev,newComment]);
+  
+   /*  console.log("after comment", data); */
+   
+  })
+  .catch((err) => console.log(err));
+ }
     return (
       <div>
         <title> {data?.title}</title>
@@ -77,6 +102,50 @@ specialaxios
                   <span className="bg-pink-400 shadow-pink-400 absolute -top-[150%] left-0 inline-flex w-80 h-[5px] rounded-md opacity-50 group-hover:top-[150%] duration-500 shadow-[0_0_10px_10px_rgba(0,0,0,0.3)]"></span>
                   Back to Home
                 </button>
+              </div>
+
+              <div>
+                <form onSubmit={commentData}>
+                  <div>
+                    <textarea
+                      name="comment"
+                      placeholder="comment Here"
+                      className="textarea textarea-accent"
+                      required
+                    ></textarea>
+                  </div>
+                  <button type="submit" className='btn my-3'>Comment</button>
+                </form>
+                <div className="space-y-6">
+                  {comment?.map((data, index) => (
+                    <div
+                      key={index}
+                      className="flex flex-col bg-gray-100 dark:bg-gray-800 p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200"
+                    >
+                      {/* User Info */}
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-3">
+                          <img
+                            src={data?.userPhoto}
+                            alt={data?.userName}
+                            className="w-10 h-10 rounded-full object-cover border-2 border-pink-500"
+                          />
+                          <span className="font-semibold text-gray-800 dark:text-gray-200">
+                            {data?.userName}
+                          </span>
+                        </div>
+                        <span className="text-xs text-gray-500 dark:text-gray-400">
+                          {new Date(data?.createdAt).toLocaleString()}
+                        </span>
+                      </div>
+
+                      {/* Comment Text */}
+                      <p className="text-gray-700 dark:text-gray-300 pl-1">
+                        {data?.comment}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
