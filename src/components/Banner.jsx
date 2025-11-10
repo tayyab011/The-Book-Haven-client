@@ -1,13 +1,18 @@
 import React, { useRef, useState } from "react";
+import { useNavigate } from "react-router";
 
 const Banner = () => {
+    const navigate=useNavigate()
   const videoRef = useRef(null);
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(true); // 👈 start muted
 
   const toggleMute = () => {
     if (videoRef.current) {
       videoRef.current.muted = !videoRef.current.muted;
       setIsMuted(videoRef.current.muted);
+      if (!videoRef.current.paused) return;
+      // play again if user interaction unblocks playback
+      videoRef.current.play().catch(() => {});
     }
   };
 
@@ -39,17 +44,27 @@ const Banner = () => {
 
       {/* Text content */}
       <div className="relative z-10 flex items-center justify-center h-full text-center text-white">
-        <div className="max-w-md">
+        <div className="w-md md:w-full">
           <h1 className="mb-5 text-5xl font-bold ">
-            Explore the World of Books |<br></br> Discover, Read & Learn
+            Explore the World of Books |<br /> Discover, Read & Learn
           </h1>
           <p className="mb-5">
             Manage your personal library, track what you’ve read, and explore
             recommendations tailored to your taste.
           </p>
           <div className="flex gap-3 justify-center">
-            <button className="btn btn-primary">All Books</button>
-            <button className="btn btn-primary">Get Started</button>
+            <button
+              onClick={() => navigate(`allBooks`)}
+              className="btn btn-primary"
+            >
+              All Books
+            </button>
+            <button
+              onClick={() => navigate(`addBook`)}
+              className="btn btn-primary"
+            >
+              Create Book
+            </button>
           </div>
         </div>
       </div>

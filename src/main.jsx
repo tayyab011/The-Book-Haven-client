@@ -23,6 +23,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
+        loader:()=>fetch("http://localhost:5050/booksSorted"),
         element: <Home />,
       },
       {
