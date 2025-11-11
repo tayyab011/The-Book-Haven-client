@@ -16,6 +16,7 @@ import AddMyBooks from './components/AddMyBooks';
 import PrivateRoute from "./Layout/PrivateRoute.jsx";
 import UpdateBook from "./components/UpdateBook.jsx";
 import Loader from "./components/Loader.jsx";
+import NotFound from './components/NotFound';
 
 const router = createBrowserRouter([
   {
@@ -46,7 +47,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/allBooks",
-     /*    hydrateFallbackElement: <Loader />, */
+        /*    hydrateFallbackElement: <Loader />, */
         element: <AllBooks />,
       },
       {
@@ -74,6 +75,10 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+      },
+      {
+        path: "*",
+        element: <NotFound/>,
       },
     ],
   },

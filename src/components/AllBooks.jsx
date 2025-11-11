@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router';
 import { use } from 'react';
 import { AuthContext } from '../provider/AuthContext';
 import Loader from './Loader';
+import NoBooks from './NoBooks';
 
 const AllBooks = () => {
   const {loader}=use(AuthContext)
@@ -69,46 +70,51 @@ if (loader) {
               </ul>
             </div>
           </div>
-          <table className="table w-full min-w-[600px] font-semibold">
-            {/* head */}
-            <thead className="text-[#FAC921] font-black md:text-xl">
-              <tr>
-                <th>Img</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Genre</th>
-                <th>Rating</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {book.map((book) => (
-                <tr key={book._id}>
-                  <td>
-                    <div className="flex items-center gap-3">
-                      <div className="avatar">
-                        <div className="mask mask-squircle h-12 w-12">
-                          <img src={book.coverImage} alt={book.title} />
+
+          {book.length === 0 ? (
+            <NoBooks />
+          ) : (
+            <table className="table w-full min-w-[600px] font-semibold">
+              {/* head */}
+              <thead className="text-[#FAC921] font-black md:text-xl">
+                <tr>
+                  <th>Img</th>
+                  <th>Title</th>
+                  <th>Author</th>
+                  <th>Genre</th>
+                  <th>Rating</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {book.map((book) => (
+                  <tr key={book._id}>
+                    <td>
+                      <div className="flex items-center gap-3">
+                        <div className="avatar">
+                          <div className="mask mask-squircle h-12 w-12">
+                            <img src={book.coverImage} alt={book.title} />
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </td>
-                  <td>{book.title}</td>
-                  <td>{book.author}</td>
-                  <td>{book.genre}</td>
-                  <td>{book.rating}</td>
-                  <td>
-                    <button
-                      onClick={() => navigate(`/boookDetails/${book._id}`)}
-                      className="btn  btn-xs! md:btn-lg! text-xs! px-3! md:px-6! md:text-base! hover:scale-105"
-                    >
-                      details
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                    </td>
+                    <td>{book.title}</td>
+                    <td>{book.author}</td>
+                    <td>{book.genre}</td>
+                    <td>{book.rating}</td>
+                    <td>
+                      <button
+                        onClick={() => navigate(`/boookDetails/${book._id}`)}
+                        className="btn  btn-xs! md:btn-lg! text-xs! px-3! md:px-6! md:text-base! hover:scale-105"
+                      >
+                        details
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
     );

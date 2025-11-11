@@ -6,6 +6,7 @@ import { useState } from "react";
 import useSpecialAxios from "../hooks/useSpecialAxios";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
+import NoBooks from "./NoBooks";
 
 const AddMyBooks = () => {
 const navigate=useNavigate()
@@ -43,55 +44,58 @@ Swal.fire({
     }
   return (
     <div className="w-11/12 mx-auto my-8">
-      {/* responsive wrapper */}
-      <div className="overflow-x-auto rounded-lg shadow">
-        <table className="table w-full text-sm md:text-base font-semibold">
-          {/* table head */}
-          <thead className="text-[#FAC921] font-black md:text-xl ">
-            <tr>
-              <th>Img</th>
-              <th>Title</th>
-              <th>Author</th>
-              <th className="text-center">Actions</th>
-            </tr>
-          </thead>
+      {book.length === 0 ? (
+        <NoBooks />
+      ) : (
+        <div className="overflow-x-auto rounded-lg shadow">
+          <table className="table w-full text-sm md:text-base font-semibold">
+            {/* table head */}
+            <thead className="text-[#FAC921] font-black md:text-xl ">
+              <tr>
+                <th>Img</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th className="text-center">Actions</th>
+              </tr>
+            </thead>
 
-          {/* table body */}
-          <tbody>
-            {book.map((book) => (
-              <tr key={book._id} className="">
-                <td>
-                  <div className="flex items-center gap-3">
-                    <div className="avatar">
-                      <div className="mask mask-squircle h-10 w-10">
-                        <img src={book?.coverImage} alt="Book cover" />
+            {/* table body */}
+            <tbody>
+              {book.map((book) => (
+                <tr key={book._id} className="">
+                  <td>
+                    <div className="flex items-center gap-3">
+                      <div className="avatar">
+                        <div className="mask mask-squircle h-10 w-10">
+                          <img src={book?.coverImage} alt="Book cover" />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </td>
-                <td className="font-medium">{book?.title}</td>
-                <td>{book?.author}</td>
-                <td>
-                  <div className="flex flex-wrap justify-center gap-2 items-center">
-                    <button
-                      onClick={() => navigate(`/update-book/${book._id}`)}
-                      className="btn btn-xs! px-5! text-xs!  font-semibold!  hover:font-bold! hover:scale-105!"
-                    >
-                      Update
-                    </button>
-                    <span
-                      onClick={() => deleteHandler(book._id)}
-                      className="btn btn-xs  border-2 border-red-500 px-5! py-3! hover:bg-red-500! hover:text-black! hover:scale-105!  font-bold!  text-red-500 bg-transparent rounded-xl! "
-                    >
-                      Delete
-                    </span>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                  </td>
+                  <td className="font-medium">{book?.title}</td>
+                  <td>{book?.author}</td>
+                  <td>
+                    <div className="flex flex-wrap justify-center gap-2 items-center">
+                      <button
+                        onClick={() => navigate(`/update-book/${book._id}`)}
+                        className="btn btn-xs! px-5! text-xs!  font-semibold!  hover:font-bold! hover:scale-105!"
+                      >
+                        Update
+                      </button>
+                      <span
+                        onClick={() => deleteHandler(book._id)}
+                        className="btn btn-xs  border-2 border-red-500 px-5! py-3! hover:bg-red-500! hover:text-black! hover:scale-105!  font-bold!  text-red-500 bg-transparent rounded-xl! "
+                      >
+                        Delete
+                      </span>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 };

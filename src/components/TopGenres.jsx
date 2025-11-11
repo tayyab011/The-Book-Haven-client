@@ -1,5 +1,6 @@
 
 import "./TopGenres.css"; 
+import { motion } from 'framer-motion';
 
 const genres = [
   {
