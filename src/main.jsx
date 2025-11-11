@@ -1,4 +1,4 @@
-import { StrictMode } from "react";
+import { StrictMode, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router";
@@ -17,7 +17,8 @@ import PrivateRoute from "./Layout/PrivateRoute.jsx";
 import UpdateBook from "./components/UpdateBook.jsx";
 import Loader from "./components/Loader.jsx";
 import NotFound from './components/NotFound';
-
+import AOS from "aos";
+import "aos/dist/aos.css";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -83,6 +84,8 @@ const router = createBrowserRouter([
     ],
   },
 ]);
+
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>

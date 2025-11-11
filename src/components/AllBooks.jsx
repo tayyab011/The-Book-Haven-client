@@ -5,6 +5,7 @@ import { use } from 'react';
 import { AuthContext } from '../provider/AuthContext';
 import Loader from './Loader';
 import NoBooks from './NoBooks';
+import { motion } from 'framer-motion';
 
 const AllBooks = () => {
   const {loader}=use(AuthContext)
@@ -74,7 +75,10 @@ if (loader) {
           {book.length === 0 ? (
             <NoBooks />
           ) : (
-            <table className="table w-full min-w-[600px] font-semibold">
+            <motion.table
+      initial={{ opacity: 0, x: 50 }}   // start right and invisible
+      animate={{ opacity: 1, x: 0 }}    // move to original position and fade in
+      transition={{ duration: 1, ease: "easeOut" }}className="table w-full min-w-[600px] font-semibold">
               {/* head */}
               <thead className="text-[#FAC921] font-black md:text-xl">
                 <tr>
@@ -113,7 +117,7 @@ if (loader) {
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </motion.table>
           )}
         </div>
       </div>

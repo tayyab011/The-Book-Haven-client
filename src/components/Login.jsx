@@ -5,6 +5,7 @@ import useAxios from '../hooks/useAxios';
 import { useState } from 'react';
 import Loader from './Loader';
 import toast from 'react-hot-toast';
+import { motion } from 'framer-motion';
 
 const Login = () => {
 
@@ -109,7 +110,14 @@ if (loader) {
   return <Loader/>
 }else{
   return (
-    <div className="flex justify-center items-center min-h-screen  px-4 sm:px-6 lg:px-8">
+    <motion.div
+      initial={{ opacity: 0, x: 50 }}  
+      animate={{ opacity: 1, x: 0 }}   
+      transition={{ duration: 1, ease: "easeOut" }}
+      initial={{ opacity: 0, x: 50 }}   
+      animate={{ opacity: 1, x: 0 }}    
+      transition={{ duration: 1, ease: "easeOut" }}
+       className="flex justify-center items-center min-h-screen  px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md  shadow-2xl shadow-[#FAC921]! rounded-3xl p-6 sm:p-10">
         <form onSubmit={hndlesubmitLoginBtn}>
           <div className="text-center mb-6">
@@ -211,7 +219,7 @@ if (loader) {
           </div>
         </form>
       </div>
-    </div>
+    </motion.div>
   );
 }
 };

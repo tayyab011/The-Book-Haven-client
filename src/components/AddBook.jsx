@@ -1,9 +1,11 @@
-import React, { use } from 'react';
+import React, { use, useEffect } from 'react';
 import { AuthContext } from '../provider/AuthContext';
 import useAxios from '../hooks/useAxios';
 import useSpecialAxios from '../hooks/useSpecialAxios';
 import { useNavigate } from 'react-router';
 import toast from 'react-hot-toast';
+import { motion } from 'framer-motion';
+
 
 const AddBook = () => {
   const {user}=use(AuthContext)
@@ -39,11 +41,16 @@ await useaxioss.post("/books",newBook).then(data =>{
 console.log(newBook)
  toast.success("Something Went wrong");
   }
- 
+  
  
     return (
       <div>
-        <section className={`body-font relative `}>
+        <motion.section
+      
+      initial={{ opacity: 0, y: 50 }}  // start hidden and slightly down
+      animate={{ opacity: 1, y: 0 }}   // fade in and move up
+      transition={{ duration: 1 }}   className={`body-font relative `}
+        >
           <form onSubmit={onBookSubmitHandler}>
             <div className="container px-5 py-24 mx-auto">
               <div className="flex flex-col text-center w-full mb-12">
@@ -90,7 +97,6 @@ console.log(newBook)
                         type="text"
                         name="title"
                         required
-                      
                         className="w-full  bg-opacity-50 rounded border border-gray-300 focus:border-[#FAC921]  focus:ring-2 focus:ring-[#FAC921] text-base outline-none py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                       />
                     </div>
@@ -172,7 +178,7 @@ console.log(newBook)
               </div>
             </div>
           </form>
-        </section>
+        </motion.section>
       </div>
     );
 };

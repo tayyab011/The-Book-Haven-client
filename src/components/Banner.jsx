@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import  ReactRotatingText from "react-rotating-text"
+import { motion } from 'framer-motion';
 const Banner = () => {
 
     const navigate=useNavigate()
@@ -46,17 +47,26 @@ const Banner = () => {
       {/* Text content */}
       <div className="relative z-10 flex items-center justify-center h-full text-center text-white">
         <div className="w-md md:w-full">
-          <h1 className="mb-5  text-3xl md:text-5xl lg:text-6xl font-bold   bg-gradient-to-r from-white to-[#FAC921] bg-clip-text text-transparent">
+          <motion.h1
+      initial={{ opacity: 0, x: -50 }} // start left and invisible
+      animate={{ opacity: 1, x: 0 }}   // move to original position and fade in
+      transition={{ duration: 1, ease: "easeOut" }} 
+         
+            className="mb-5  text-3xl md:text-5xl lg:text-6xl font-bold   bg-gradient-to-r from-white to-[#FAC921] bg-clip-text text-transparent"
+          >
             Explore the World of Books |<br />
             <ReactRotatingText
               className=""
               items={["Discover", "Read", "Read & Learn"]}
             />
-          </h1>
-          <p className="mb-5">
+          </motion.h1>
+          <motion.p
+      initial={{ opacity: 0, x: 50 }}   // start right and invisible
+      animate={{ opacity: 1, x: 0 }}    // move to original position and fade in
+      transition={{ duration: 1, ease: "easeOut" }} className="mb-5">
             Manage your personal library, track what you’ve read, and explore
             recommendations tailored to your taste.
-          </p>
+          </motion.p>
           <div className="flex gap-3 justify-center">
             <button onClick={() => navigate(`allBooks`)} className="btn Btn">
               <span> All Books</span>

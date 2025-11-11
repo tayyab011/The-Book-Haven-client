@@ -7,6 +7,7 @@ import useSpecialAxios from "../hooks/useSpecialAxios";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import NoBooks from "./NoBooks";
+import { motion } from 'framer-motion';
 
 const AddMyBooks = () => {
 const navigate=useNavigate()
@@ -48,7 +49,10 @@ Swal.fire({
         <NoBooks />
       ) : (
         <div className="overflow-x-auto rounded-lg shadow">
-          <table className="table w-full text-sm md:text-base font-semibold">
+          <motion.table
+      initial={{ opacity: 0, x: -50 }} // start left and invisible
+      animate={{ opacity: 1, x: 0 }}   // move to original position and fade in
+      transition={{ duration: 1, ease: "easeOut" }}  className="table w-full text-sm md:text-base font-semibold">
             {/* table head */}
             <thead className="text-[#FAC921] font-black md:text-xl ">
               <tr>
@@ -93,7 +97,7 @@ Swal.fire({
                 </tr>
               ))}
             </tbody>
-          </table>
+          </motion.table>
         </div>
       )}
     </div>

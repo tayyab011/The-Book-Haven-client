@@ -3,6 +3,7 @@ import { AuthContext } from '../provider/AuthContext';
 import { useNavigate, useParams } from 'react-router';
 import useSpecialAxios from '../hooks/useSpecialAxios';
 import toast from 'react-hot-toast';
+import { motion } from 'framer-motion';
 
 const UpdateBook = () => {
     const navigate=useNavigate()
@@ -49,7 +50,11 @@ await specialaxios.put(`/booksByUser/${id}`,newBook).then(data=> {
 }).catch(err=>console.log(err))
     }
     return (
-      <section className="body-font relative">
+      <motion.section
+      
+      initial={{ opacity: 0, y: 50 }}  // start hidden and slightly down
+      animate={{ opacity: 1, y: 0 }}   // fade in and move up
+      transition={{ duration: 1 }}  className="body-font relative">
         <form onSubmit={onBookSubmitHandler}>
           <div className="container px-5 py-24 mx-auto">
             <div className="flex flex-col text-center w-full mb-12">
@@ -177,7 +182,7 @@ await specialaxios.put(`/booksByUser/${id}`,newBook).then(data=> {
             </div>
           </div>
         </form>
-      </section>
+      </motion.section>
     );
 };
 

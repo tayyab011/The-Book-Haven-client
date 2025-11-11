@@ -6,6 +6,7 @@ import useAxios from '../hooks/useAxios';
 import { auth } from '../firebase/firebase.init';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
+import { motion } from 'framer-motion';
 
 const Register = () => {
     const [err, seterr] = useState("");
@@ -143,7 +144,10 @@ setLoader(false);
       return <Loader/>
     }else{
     return (
-      <div className="flex justify-center items-center min-h-screen px-4 sm:px-6 lg:px-8 shadow-[#FAC921] py-4">
+      <motion.div
+      initial={{ opacity: 0, x: -50 }} // start left and invisible
+      animate={{ opacity: 1, x: 0 }}   // move to original position and fade in
+      transition={{ duration: 1, ease: "easeOut" }} className="flex justify-center items-center min-h-screen px-4 sm:px-6 lg:px-8 shadow-[#FAC921] py-4">
         <div className="w-full max-w-md  shadow-2xl shadow-[#FAC921]! rounded-3xl p-6 sm:p-10">
           <form onSubmit={hndlesubmitBtn}>
             <div className="text-center mb-6">
@@ -261,7 +265,7 @@ setLoader(false);
             </div>
           </form>
         </div>
-      </div>
+      </motion.div>
     );
 
   }
