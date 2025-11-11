@@ -1,0 +1,27 @@
+
+
+.genre-card {
+  transform: translateY(20px);
+  opacity: 0;
+  animation: fadeUp 1s ease forwards;
+}
+
+.genre-card:hover {
+  transform: scale(1.05);
+  transition: transform 0.4s ease;
+}
+
+@keyframes fadeUp {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Gradient text utility */
+.gradient-text {
+  background: linear-gradient(to right, white, #fac921);
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

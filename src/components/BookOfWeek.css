@@ -1,0 +1,25 @@
+.fade-left {
+  opacity: 0;
+  transform: translateX(-50px);
+  animation: fadeLeft 1s ease forwards;
+}
+
+.fade-right {
+  opacity: 0;
+  transform: translateX(50px);
+  animation: fadeRight 1s ease forwards;
+}
+
+@keyframes fadeLeft {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeRight {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
