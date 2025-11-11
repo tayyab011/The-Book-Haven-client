@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import useAxios from '../hooks/useAxios';
 import { Link, useNavigate } from 'react-router';
+import { use } from 'react';
+import { AuthContext } from '../provider/AuthContext';
+import Loader from './Loader';
 
 const AllBooks = () => {
+  const {loader}=use(AuthContext)
   const [sort,setSort]=useState("")
     const navigate=useNavigate()
     const axiosUse=useAxios()
@@ -38,6 +42,10 @@ await fetch("http://localhost:5050/booksSortedAssending")
    .then((data) => console.log("after sorting", setBook(data.result)));
   }  
 }
+
+if (loader) {
+  return <Loader/>
+}else{
     return (
       <div className={`w-11/12 mx-auto  my-5 overflow-x-auto `}>
         <div className="overflow-x-auto w-full">
@@ -104,6 +112,8 @@ await fetch("http://localhost:5050/booksSortedAssending")
         </div>
       </div>
     );
+
+  }
 };
 
 export default AllBooks;

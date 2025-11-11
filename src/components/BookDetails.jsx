@@ -4,9 +4,10 @@ import { useLoaderData, useNavigate, useParams } from 'react-router';
 import useSpecialAxios from '../hooks/useSpecialAxios';
 import { useState } from 'react';
 import { AuthContext } from '../provider/AuthContext';
+import { useContext } from 'react';
 
 const BookDetails = () => {
-  const {user}=use(AuthContext)
+  const { user } = useContext(AuthContext);
 
    const navigate = useNavigate();
    const [comment,setComment]=useState([])
@@ -33,12 +34,13 @@ const newComment = {
   userName: user?.displayName,
   userPhoto: user?.photoURL,
   comment: comment,
+  createdAt: new Date(),
 };
 await specialaxios
   .post(`/books/${id}/comments`, newComment)
   .then((data) => {
    
-      setComment((prev) => [...prev,newComment]);
+     setComment((prev) => [...prev , newComment]);
   
    /*  console.log("after comment", data); */
    
@@ -47,7 +49,6 @@ await specialaxios
  }
     return (
       <div>
-        <title> {data?.title}</title>
         <div className="w-11/12 mx-auto my-10">
           <div className="card lg:card-side ">
             <figure className="lg:w-1/2 p-3 shadow">
@@ -103,50 +104,51 @@ await specialaxios
                   Back to Home
                 </button>
               </div>
-
+            </div>
+          </div>
+          <div className="my-5">
+            <form onSubmit={commentData}>
               <div>
-                <form onSubmit={commentData}>
-                  <div>
-                    <textarea
-                      name="comment"
-                      placeholder="comment Here"
-                      className="textarea textarea-accent"
-                      required
-                    ></textarea>
-                  </div>
-                  <button type="submit" className='btn my-3'>Comment</button>
-                </form>
-                <div className="space-y-6">
-                  {comment?.map((data, index) => (
-                    <div
-                      key={index}
-                      className="flex flex-col bg-gray-100 dark:bg-gray-800 p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200"
-                    >
-                      {/* User Info */}
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center gap-3">
-                          <img
-                            src={data?.userPhoto}
-                            alt={data?.userName}
-                            className="w-10 h-10 rounded-full object-cover border-2 border-pink-500"
-                          />
-                          <span className="font-semibold text-gray-800 dark:text-gray-200">
-                            {data?.userName}
-                          </span>
-                        </div>
-                        <span className="text-xs text-gray-500 dark:text-gray-400">
-                          {new Date(data?.createdAt).toLocaleString()}
-                        </span>
-                      </div>
-
-                      {/* Comment Text */}
-                      <p className="text-gray-700 dark:text-gray-300 pl-1">
-                        {data?.comment}
-                      </p>
-                    </div>
-                  ))}
-                </div>
+                <textarea
+                  name="comment"
+                  placeholder="comment Here"
+                  className="textarea textarea-accent"
+                  required
+                ></textarea>
               </div>
+              <button type="submit" className="btn my-3">
+                Comment
+              </button>
+            </form>
+            <div className="space-y-6 md:w-1/4">
+              {comment?.map((data, index) => (
+                <div
+                  key={index}
+                  className="flex flex-col bg-gray-100 dark:bg-gray-800 p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200"
+                >
+                  {/* User Info */}
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center gap-3">
+                      <img
+                        src={data?.userPhoto}
+                        alt={data?.userName}
+                        className="w-10 h-10 rounded-full object-cover border-2 border-pink-500"
+                      />
+                      <span className="font-semibold text-gray-800 dark:text-gray-200">
+                        {data?.userName}
+                      </span>
+                    </div>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                      {new Date(data?.createdAt).toLocaleString()}
+                    </span>
+                  </div>
+
+                  {/* Comment Text */}
+                  <p className="text-gray-700 dark:text-gray-300 pl-1">
+                    {data?.comment}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
