@@ -5,6 +5,7 @@ import useSpecialAxios from '../hooks/useSpecialAxios';
 import { useState } from 'react';
 import { AuthContext } from '../provider/AuthContext';
 import { useContext } from 'react';
+import toast from 'react-hot-toast';
 
 const BookDetails = () => {
   const { user } = useContext(AuthContext);
@@ -41,11 +42,11 @@ await specialaxios
   .then((data) => {
    
      setComment((prev) => [...prev , newComment]);
-  
+  toast.success("Comment Add Successfull");
    /*  console.log("after comment", data); */
-   
+   e.target.reset()
   })
-  .catch((err) => console.log(err));
+  .catch((err) => toast.error("someting went wrong"));
  }
     return (
       <div>
@@ -60,28 +61,37 @@ await specialaxios
             </figure>
 
             <div className="card-body lg:w-1/2 space-y-3">
-              <h2 className="card-title text-3xl font-black gradient-text">
+              <h2 className="card-title md:text-5xl text-3xl  font-black gradient-text">
                 {data?.title}
               </h2>
-              <p className="gradient-text font-bold"> {data?.summary}</p>
+              <p className="gradient-text font-bold md:text-lg text-base">
+                {" "}
+                {data?.summary}
+              </p>
 
               <div className="">
                 <p>
-                  <span className="font-black">Author:</span>{" "}
-                  <span className="gradient-text font-bold">
+                  <span className="font-black md:text-lg text-base">
+                    Author:
+                  </span>{" "}
+                  <span className="gradient-text font-bold md:text-lg text-base">
                     {data?.author}
                   </span>
                 </p>
                 <p>
-                  <span className="font-black">Genre:</span>{" "}
-                  <span className="gradient-text font-bold">
+                  <span className="font-black md:text-lg text-base">
+                    Genre:
+                  </span>{" "}
+                  <span className="gradient-text font-bold md:text-lg text-base">
                     {" "}
                     {data?.genre}
                   </span>
                 </p>
                 <p>
-                  <span className="font-black">Ratings:</span>{" "}
-                  <span className="gradient-text font-bold">
+                  <span className="font-black md:text-lg text-base">
+                    Ratings:
+                  </span>{" "}
+                  <span className="gradient-text font-bold md:text-lg text-base">
                     ⭐ {data?.rating}
                   </span>
                 </p>
@@ -98,21 +108,20 @@ await specialaxios
 
                 <button
                   onClick={() => navigate(`/`)}
-                  className="bg-pink-950 text-pink-400 border cursor-pointer border-pink-400 border-b-4 font-medium overflow-hidden relative px-4 py-2 rounded-md hover:brightness-150 hover:border-t-4 hover:border-b active:opacity-75 outline-none duration-300 group"
+                  className="btn  btn-xs! md:btn-lg! text-sm! px-6! py-4! md:px-6! md:text-base! hover:scale-105 "
                 >
-                  <span className="bg-pink-400 shadow-pink-400 absolute -top-[150%] left-0 inline-flex w-80 h-[5px] rounded-md opacity-50 group-hover:top-[150%] duration-500 shadow-[0_0_10px_10px_rgba(0,0,0,0.3)]"></span>
                   Back to Home
                 </button>
               </div>
             </div>
           </div>
-          <div className="my-5">
-            <form onSubmit={commentData}>
+          <div className="my-5 w-full block mx-auto">
+            <form onSubmit={commentData} className=" w-full ">
               <div>
                 <textarea
                   name="comment"
                   placeholder="comment Here"
-                  className="textarea textarea-accent"
+                  className="textarea textarea-accent  md:w-1/2 w-full mx-auto"
                   required
                 ></textarea>
               </div>

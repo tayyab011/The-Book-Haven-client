@@ -4,6 +4,7 @@ import { AuthContext } from '../provider/AuthContext';
 import useAxios from '../hooks/useAxios';
 import { useState } from 'react';
 import Loader from './Loader';
+import toast from 'react-hot-toast';
 
 const Login = () => {
 
@@ -13,7 +14,7 @@ const Login = () => {
     const useAxioss = useAxios();
   const navigate=useNavigate()
  /*  console.log("lo", state); */
-        const { login, googleSignin ,loader} = use(AuthContext);
+        const { login, googleSignin ,loader , setLoader} = use(AuthContext);
  const hndlesubmitLoginBtn = (e) => {
    e.preventDefault();
    const email = e.target.email.value;
@@ -70,7 +71,8 @@ if (!hasUppercase.test(password)) {
    })
    .catch((err) => {
      if (err.code === "auth/invalid-credential") {
-       alert("please enter correct email or password");
+         toast.error("please enter correct email or password");
+          setLoader(false);
      }
 
      console.log(err.code);
@@ -80,7 +82,7 @@ if (!hasUppercase.test(password)) {
  const googleSignInHandler=(e)=>{
     e.preventDefault();
     googleSignin()
-      .then((res) => {alert("sign in successfully")
+      .then((res) => { toast.success("user login successfull");
  const newUser = {
    name: res.user.displayName,
    email: res.user.email,
@@ -88,12 +90,19 @@ if (!hasUppercase.test(password)) {
  };
  useAxioss
    .post("/users", newUser)
-   .then((data) => console.log("after add in  mongodb", data.data))
+   .then((data) => {
+   /*  console.log("after add in  mongodb", data.data) */
+  })
    .catch((err) => console.log(err));
         
            navigate(`${state ? state : "/"}`);
       })
-      .catch(() => alert("something went wrong"));
+      .catch(() => 
+        { setLoader(false)
+  
+         toast.error("something went wrong");
+      }
+      );
  }
 
 if (loader) {
@@ -101,27 +110,26 @@ if (loader) {
 }else{
   return (
     <div className="flex justify-center items-center min-h-screen  px-4 sm:px-6 lg:px-8">
-      <div className="w-full max-w-md bg-white shadow-2xl rounded-3xl p-6 sm:p-10">
+      <div className="w-full max-w-md  shadow-2xl shadow-[#FAC921]! rounded-3xl p-6 sm:p-10">
         <form onSubmit={hndlesubmitLoginBtn}>
           <div className="text-center mb-6">
-            <h2 className="text-2xl font-bold text-gray-800">Welcome Back</h2>
-            <p className="text-gray-500 text-sm mt-2">
+            <h2 className="md:text-3xl text-2xl  font-bold text-[#FAC921]">
+              Welcome Back
+            </h2>
+            <p className=" text-sm mt-2 font-semibold">
               Sign in to continue your journey
             </p>
           </div>
 
           {/* Email */}
-          <label
-            htmlFor="email"
-            className="font-semibold text-sm text-gray-600 block mb-1"
-          >
+          <label htmlFor="email" className="font-semibold  block mb-1">
             Email
           </label>
           <input
             type="email"
             name="email"
             placeholder="Enter your email"
-            className="border rounded-lg px-3 py-2 mb-4 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="border rounded-lg px-3 py-2 mb-6 text-sm w-full focus:outline-none focus:border-[#FAC921] focus:bg-white focus:ring-2 focus:ring-[#FAC921]"
           />
           {err && (
             <p className="text-red-400 font-base py-1 text-sm -mt-5 mb-4">
@@ -129,17 +137,14 @@ if (loader) {
             </p>
           )}
           {/* Password */}
-          <label
-            htmlFor="password"
-            className="font-semibold text-sm text-gray-600 block mb-1"
-          >
+          <label htmlFor="password" className="font-semibold  block mb-1">
             Password
           </label>
           <input
             type="password"
             name="password"
             placeholder="Enter your password"
-            className="border rounded-lg px-3 py-2 mb-2 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="border rounded-lg px-3 py-2 mb-6 text-sm w-full focus:outline-none focus:border-[#FAC921] focus:bg-white focus:ring-2 focus:ring-[#FAC921]"
           />
           {errpass && (
             <p className="text-red-400 font-ligth  text-sm py-1 -mt-3 mb-4">
@@ -157,7 +162,7 @@ if (loader) {
           </div>
 
           {/* Google Login */}
-          <button
+          <span
             type="button"
             onClick={googleSignInHandler}
             className="flex items-center justify-center gap-2 py-2 px-4 mb-5 w-full bg-white border border-gray-300 hover:bg-gray-100 text-gray-700 text-sm font-medium rounded-lg shadow-sm transition duration-200"
@@ -186,13 +191,10 @@ if (loader) {
               ></path>
             </svg>
             <span>Sign in with Google</span>
-          </button>
+          </span>
 
           {/* Submit Button */}
-          <button
-            type="submit"
-            className="py-2 px-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-lg transition duration-200"
-          >
+          <button type="submit" className="py-2 px-4 w-full hover:scale-105!">
             Log in
           </button>
 

@@ -8,7 +8,7 @@ const Home = () => {
   const theme =localStorage.getItem("theme")
 
     return (
-      <div className={`${theme === "light" && "bg-soft-sky"}`}>
+      <div>
         <Banner />
         <div className="w-11/12 mx-auto my-5">
           <SortedBooks sortBooks={sortData.result} />

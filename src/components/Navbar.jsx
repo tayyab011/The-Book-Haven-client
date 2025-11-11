@@ -1,10 +1,10 @@
 import React, { use, useEffect, useState } from 'react';
-import { NavLink } from 'react-router';
+import { NavLink, useNavigate } from 'react-router';
 import { AuthContext } from '../provider/AuthContext';
-
+import "./Nav.css"
 const Navbar = () => {
     const { user, logout } = use(AuthContext);
-
+const navigate=useNavigate()
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "autumn");
  useEffect(() => {
    const html = document.querySelector("html");
@@ -14,7 +14,7 @@ const Navbar = () => {
         const link = (
           <>
             <li>
-              <NavLink> Home</NavLink>
+              <NavLink to="/" className=""> Home</NavLink>
             </li>
             <li>
               <NavLink to="/allBooks"> All Books</NavLink>
@@ -38,7 +38,7 @@ const Navbar = () => {
 
     return (
       <div>
-        <div className="navbar shadow-sm">
+        <div className="navbar shadow-sm bg-base-100">
           <div className="navbar-start">
             <div className="dropdown">
               <div
@@ -64,7 +64,7 @@ const Navbar = () => {
               </div>
               <ul
                 tabIndex="-1"
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow  text-[20px]"
               >
                 {link}
               </ul>
@@ -72,14 +72,14 @@ const Navbar = () => {
             <a className="btn btn-ghost text-xl">daisyUI</a>
           </div>
           <div className="navbar-center hidden lg:flex">
-            <ul className="menu menu-horizontal px-1">{link}</ul>
+            <ul className="menu menu-horizontal px-1 text-[18px]">{link}</ul>
           </div>
           <div className="navbar-end">
             <input
               onChange={(e) => handleTheme(e.target.checked)}
               type="checkbox"
               defaultChecked={localStorage.getItem("theme") === "dark"}
-              className="toggle mr-4"
+              className="toggle mr-2 md:mr-4"
             />
             {user ? (
               <>
@@ -93,22 +93,29 @@ const Navbar = () => {
                     className="btn btn-ghost btn-circle avatar"
                   >
                     <div className="w-10 rounded-full">
-                      <img alt="user" src={user?.photoURL} />
+                      <img
+                        alt="user"
+                        src={`${
+                          user.photoURL
+                            ? user?.photoURL
+                            : "https://img.freepik.com/premium-vector/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-vector-illustration_561158-3383.jpg?semt=ais_hybrid&w=740&q=80"
+                        }`}
+                      />
                     </div>
                   </div>
                   <ul
                     tabIndex="-1"
-                    className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow "
+                    className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow text-center space-y-4"
                   >
-                    <li>
-                      <a className="justify-between hover:bg-gray-100 hover:text-black">
+                    <li className="text-center">
+                      <a className="justify-between  text-center text-base">
                         {user.displayName || "Profile"}
                       </a>
                     </li>
 
                     <li>
                       <button
-                        className="hover:bg-gray-100 hover:text-black"
+                        className="btn  btn-xs! md:btn-xs! text-sm! px-6! py-4! md:px-3! md:text-base! hover:scale-105  "
                         onClick={logout}
                       >
                         Logout
@@ -119,12 +126,18 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <NavLink to="/login" className="btn ui-btn mr-4">
+                <button
+                  onClick={() => navigate("/login")}
+                  className="btn  md:mr-4 mr-2  btn-xs! md:btn-lg! text-xs! px-3! md:px-6! md:text-base! hover:scale-105"
+                >
                   <span> Login</span>
-                </NavLink>
-                <NavLink to="/register" className="btn ui-btn">
+                </button>
+                <button
+                  onClick={() => navigate("/register")}
+                  className="btn  btn-xs! md:btn-lg! text-xs! px-3! md:px-6! md:text-base! hover:scale-105"
+                >
                   <span> Register</span>
-                </NavLink>
+                </button>
               </>
             )}
           </div>

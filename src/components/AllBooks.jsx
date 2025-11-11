@@ -58,7 +58,7 @@ if (loader) {
               </div>
               <ul
                 tabIndex="-1"
-                className="dropdown-content menu bg-base-100 rounded-box z-1 w-30 p-2 shadow-sm"
+                className="dropdown-content menu bg-base-100 rounded-box z-50 w-30 p-2 shadow-sm right-14"
               >
                 <li onClick={() => sortHandler("lowertoupper")}>
                   <a>Low-High</a>
@@ -69,11 +69,11 @@ if (loader) {
               </ul>
             </div>
           </div>
-          <table className="table w-full min-w-[600px]">
+          <table className="table w-full min-w-[600px] font-semibold">
             {/* head */}
-            <thead>
+            <thead className="text-[#FAC921] font-black md:text-xl">
               <tr>
-                <th></th>
+                <th>Img</th>
                 <th>Title</th>
                 <th>Author</th>
                 <th>Genre</th>
@@ -100,7 +100,7 @@ if (loader) {
                   <td>
                     <button
                       onClick={() => navigate(`/boookDetails/${book._id}`)}
-                      className="btn btn-xs ui-btn"
+                      className="btn  btn-xs! md:btn-lg! text-xs! px-3! md:px-6! md:text-base! hover:scale-105"
                     >
                       details
                     </button>

@@ -10,6 +10,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../firebase/firebase.init";
+import toast from "react-hot-toast";
 
 const AuthProvider = ({ children }) => {
   const [loader, setLoader] = useState(true);
@@ -30,8 +31,9 @@ const AuthProvider = ({ children }) => {
   };
   const logout = () => {
     return signOut(auth)
-      .then(() => alert("logout successfull"))
-      .catch(() => alert("somthing went wrong"));
+      .then(() => toast.success("logout successfull")
+    )
+      .catch(() => toast.error("somthing went wrong"));
   };
   const updateUsersData=(data)=>{
        setLoader(false);

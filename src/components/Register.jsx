@@ -5,6 +5,7 @@ import Loader from './Loader';
 import useAxios from '../hooks/useAxios';
 import { auth } from '../firebase/firebase.init';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 const Register = () => {
     const [err, seterr] = useState("");
@@ -90,7 +91,7 @@ updateUsersData({  displayName:name,photoURL:photo}).then(res=>{
   console.log("for update user",err)
 })
 
-  alert("user create successfully");
+  toast.success("sign up successfully");
   navigate("/")
   const newUser = {
     name: name,
@@ -111,7 +112,9 @@ setLoader(false)
     const googleSignUpHandler = (e) => {
       e.preventDefault();
       googleSignin()
-        .then((res) => {alert("sign up successfully")
+        .then((res) => {
+          
+          toast.success("sign up successfully");
           setLoader(false);
            const newUser = {
              name: res.user.displayName,
@@ -132,7 +135,7 @@ setLoader(false);
         })
         .catch(() => {
            setLoader(false);
-          alert("something went wrong")
+          toast.error("something went wrong");
          
         });
     };
@@ -140,30 +143,27 @@ setLoader(false);
       return <Loader/>
     }else{
     return (
-      <div className="flex justify-center items-center min-h-screen px-4 sm:px-6 lg:px-8">
-        <div className="w-full max-w-md bg-white shadow-2xl rounded-3xl p-6 sm:p-10">
+      <div className="flex justify-center items-center min-h-screen px-4 sm:px-6 lg:px-8 shadow-[#FAC921] py-4">
+        <div className="w-full max-w-md  shadow-2xl shadow-[#FAC921]! rounded-3xl p-6 sm:p-10">
           <form onSubmit={hndlesubmitBtn}>
             <div className="text-center mb-6">
-              <h2 className="text-2xl font-bold text-gray-800">
+              <h2 className="md:text-3xl text-2xl  font-bold text-[#FAC921]">
                 Create Account
               </h2>
-              <p className="text-gray-500 text-sm mt-2">
+              <p className="font-semibold text-sm mt-2">
                 Sign up to get started
               </p>
             </div>
 
             {/* Name */}
-            <label
-              htmlFor="name"
-              className="font-semibold text-sm text-gray-600 block mb-1"
-            >
+            <label htmlFor="name" className="font-semibold  block mb-1">
               Name
             </label>
             <input
               type="text"
               name="name"
               placeholder="Enter your name"
-              className="border rounded-lg px-3 py-2 mb-4 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="border rounded-lg px-3 py-2 mb-6 text-sm w-full focus:outline-none focus:border-[#FAC921] focus:bg-white focus:ring-2 focus:ring-[#FAC921]"
             />
             {errname && (
               <p className="text-red-400 font-base py-1 text-sm -mt-5 mb-4">
@@ -171,17 +171,14 @@ setLoader(false);
               </p>
             )}
             {/* Email */}
-            <label
-              htmlFor="email"
-              className="font-semibold text-sm text-gray-600 block mb-1"
-            >
+            <label htmlFor="email" className="font-semibold  block mb-1">
               Email
             </label>
             <input
               type="email"
               name="email"
               placeholder="Enter your email"
-              className="border rounded-lg px-3 py-2 mb-4 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="border rounded-lg px-3 py-2 mb-6 text-sm w-full focus:outline-none focus:border-[#FAC921] focus:bg-white focus:ring-2 focus:ring-[#FAC921]"
             />
             {err && (
               <p className="text-red-400 font-base py-1 text-sm -mt-5 mb-4">
@@ -189,31 +186,25 @@ setLoader(false);
               </p>
             )}
             {/* Photo URL */}
-            <label
-              htmlFor="photo"
-              className="font-semibold text-sm text-gray-600 block mb-1"
-            >
+            <label htmlFor="photo" className="font-semibold  block mb-1">
               Photo URL
             </label>
             <input
               type="text"
               name="photo"
               placeholder="Enter photo URL"
-              className="border rounded-lg px-3 py-2 mb-4 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="border rounded-lg px-3 py-2 mb-6 text-sm w-full focus:outline-none focus:border-[#FAC921] focus:bg-white focus:ring-2 focus:ring-[#FAC921]"
             />
 
             {/* Password */}
-            <label
-              htmlFor="password"
-              className="font-semibold text-sm text-gray-600 block mb-1"
-            >
+            <label htmlFor="password" className="font-semibold  block mb-1">
               Password
             </label>
             <input
               type="password"
               name="password"
               placeholder="Enter your password"
-              className="border rounded-lg px-3 py-2 mb-6 text-sm w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="border rounded-lg px-3 py-2 mb-6 text-sm w-full focus:outline-none focus:border-[#FAC921] focus:bg-white focus:ring-2 focus:ring-[#FAC921]"
             />
             {errpass && (
               <p className="text-red-400 font-ligth  text-sm py-1 -mt-5 mb-4">
@@ -221,7 +212,7 @@ setLoader(false);
               </p>
             )}
             {/* Google Signup */}
-            <button
+            <span
               type="button"
               onClick={googleSignUpHandler}
               className="flex items-center justify-center gap-2 py-2 px-4 mb-5 w-full bg-white border border-gray-300 hover:bg-gray-100 text-gray-700 text-sm font-medium rounded-lg shadow-sm transition duration-200"
@@ -250,13 +241,10 @@ setLoader(false);
                 ></path>
               </svg>
               <span>Sign up with Google</span>
-            </button>
+            </span>
 
             {/* Submit */}
-            <button
-              type="submit"
-              className="py-2 px-4 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-lg transition duration-200"
-            >
+            <button type="submit" className="py-2 px-4 w-full hover:scale-105!">
               Register
             </button>
 
