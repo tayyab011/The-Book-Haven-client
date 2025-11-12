@@ -96,3 +96,37 @@ button:hover::before {
   outline: none !important;
   box-shadow: none !important;
 }
+
+
+
+
+
+
+
+
+
+.scroll-to-top {
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 50% !important;
+margin-right: 10px;
+padding-right: 40px;
+ background-color: #FAC921;
+  right: 40px !important;
+  bottom: 30px !important;
+  z-index: 9999 !important;
+  font-weight: bolder;
+}
+
+.scroll-to-top svg {
+
+  width: 20px;
+  height: 20px;
+}
+
+@media (max-width: 570px) {
+.scroll-to-top {
+padding: 0 16px;
+}
+
+}

@@ -9,13 +9,12 @@ const RootLayout = () => {
   const {state} =useNavigation()
     return (
       <div>
+      
         <div className=" z-50  sticky top-0">
           <Navbar />
         </div>
-{
-  state == "loading" ? <Loader/> :  <Outlet />
-}
-      
+        {state == "loading" ? <Loader /> : <Outlet />}
+       
         <Footer />
       </div>
     );

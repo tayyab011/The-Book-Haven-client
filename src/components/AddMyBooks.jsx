@@ -44,7 +44,7 @@ Swal.fire({
 });
     }
   return (
-    <div className="w-11/12 mx-auto my-8">
+    <div className="w-11/12 mx-auto my-24 ">
       {book.length === 0 ? (
         <NoBooks />
       ) : (

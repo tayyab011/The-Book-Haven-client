@@ -111,13 +111,14 @@ if (loader) {
 }else{
   return (
     <motion.div
-      initial={{ opacity: 0, x: 50 }}  
-      animate={{ opacity: 1, x: 0 }}   
+      initial={{ opacity: 0, x: 50 }}
+      animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 1, ease: "easeOut" }}
-      initial={{ opacity: 0, x: 50 }}   
-      animate={{ opacity: 1, x: 0 }}    
+      initial={{ opacity: 0, x: 50 }}
+      animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 1, ease: "easeOut" }}
-       className="flex justify-center items-center min-h-screen  px-4 sm:px-6 lg:px-8">
+      className="flex justify-center items-center min-h-screen  px-4 sm:px-6 lg:px-8"
+    >
       <div className="w-full max-w-md  shadow-2xl shadow-[#FAC921]! rounded-3xl p-6 sm:p-10">
         <form onSubmit={hndlesubmitLoginBtn}>
           <div className="text-center mb-6">
@@ -129,7 +130,6 @@ if (loader) {
             </p>
           </div>
 
-          {/* Email */}
           <label htmlFor="email" className="font-semibold  block mb-1">
             Email
           </label>
@@ -144,7 +144,7 @@ if (loader) {
               {err}
             </p>
           )}
-          {/* Password */}
+
           <label htmlFor="password" className="font-semibold  block mb-1">
             Password
           </label>
@@ -159,7 +159,7 @@ if (loader) {
               {errpass}
             </p>
           )}
-          {/* Forgot Password */}
+
           <div className="text-right mb-5">
             <a
               href="#"
@@ -169,11 +169,10 @@ if (loader) {
             </a>
           </div>
 
-          {/* Google Login */}
           <span
             type="button"
             onClick={googleSignInHandler}
-            className="flex items-center justify-center gap-2 py-2 px-4 mb-5 w-full bg-white border border-gray-300 hover:bg-gray-100 text-gray-700 text-sm font-medium rounded-lg shadow-sm transition duration-200"
+            className="flex items-center cursor-pointer justify-center gap-2 py-2 px-4 mb-5 w-full bg-white border border-gray-300 hover:bg-gray-100 text-gray-700 text-sm font-medium rounded-lg shadow-sm transition duration-200"
           >
             <svg
               viewBox="0 0 24 24"
@@ -201,12 +200,13 @@ if (loader) {
             <span>Sign in with Google</span>
           </span>
 
-          {/* Submit Button */}
-          <button type="submit" className="py-2 px-4 w-full hover:scale-105!">
+          <button
+            type="submit"
+            className="py-2 px-4 w-full hover:scale-105! cursor-pointer"
+          >
             Log in
           </button>
 
-          {/* Divider + Signup Link */}
           <div className="flex items-center justify-center mt-6">
             <span className="w-1/5 border-b border-gray-300"></span>
             <Link

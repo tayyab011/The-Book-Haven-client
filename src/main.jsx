@@ -17,8 +17,10 @@ import PrivateRoute from "./Layout/PrivateRoute.jsx";
 import UpdateBook from "./components/UpdateBook.jsx";
 import Loader from "./components/Loader.jsx";
 import NotFound from './components/NotFound';
-import AOS from "aos";
-import "aos/dist/aos.css";
+import ScrollToTop from "react-scroll-to-top";
+
+
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -88,6 +90,7 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
+    <ScrollToTop smooth className="scroll-to-top bg-[#FAC921]" />
     <AuthProvider>
       <Toaster />
       <RouterProvider router={router} />

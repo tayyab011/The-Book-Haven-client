@@ -37,9 +37,9 @@ const newBook = {
 await useaxioss.post("/books",newBook).then(data =>{
   toast.success("Add Book Successfull")
   navigate("/myBook");
-}).catch(err=>console.log(err))
-console.log(newBook)
- toast.success("Something Went wrong");
+}).catch(err=>toast.error("Something Went wrong"))
+/* console.log(newBook)
+ toast.success("Something Went wrong"); */
   }
   
  
@@ -54,7 +54,7 @@ console.log(newBook)
           <form onSubmit={onBookSubmitHandler}>
             <div className="container px-5 py-24 mx-auto">
               <div className="flex flex-col text-center w-full mb-12">
-                <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold   bg-gradient-to-r from-white to-[#FAC921] bg-clip-text text-transparent">
+                <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold ">
                   Add Books
                 </h1>
               </div>
@@ -149,7 +149,7 @@ console.log(newBook)
                         type="text"
                         name="summary"
                         required
-                        className="w-full cursor-not-allowed bg-opacity-50 rounded border border-gray-300 focus:border-[#FAC921]  focus:ring-2 focus:ring-[#FAC921] text-base outline-none py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                        className="w-full  bg-opacity-50 rounded border border-gray-300 focus:border-[#FAC921]  focus:ring-2 focus:ring-[#FAC921] text-base outline-none py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                       />
                     </div>
                   </div>
@@ -162,7 +162,7 @@ console.log(newBook)
                         type="text"
                         name="image"
                         required
-                        className="w-full cursor-not-allowed bg-opacity-50 rounded border border-gray-300 focus:border-[#FAC921]  focus:ring-2 focus:ring-[#FAC921] text-base outline-none py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                        className="w-full bg-opacity-50 rounded border border-gray-300 focus:border-[#FAC921]  focus:ring-2 focus:ring-[#FAC921] text-base outline-none py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                       />
                     </div>
                   </div>

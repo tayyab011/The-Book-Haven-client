@@ -84,9 +84,9 @@ if (!hasUppercase.test(password)) {
 
 
 await register(email, password).then(res=>{
-  console.log(res.user)
+/*   console.log(res.user) */
 updateUsersData({  displayName:name,photoURL:photo}).then(res=>{
-  console.log(res)
+ /*  console.log(res) */
   setUser({ ...auth.currentUser });
 }).catch(err=>{
   console.log("for update user",err)
@@ -99,12 +99,15 @@ updateUsersData({  displayName:name,photoURL:photo}).then(res=>{
     email: email,
     photoURL: photo,
   };
-useAxioss.post("/users",newUser).then(data=>console.log("after add in  mongodb",data.data)).catch(err=>console.log(err)
+useAxioss.post("/users",newUser).then(data=>console.log("after add in  mongodb",data.data)).catch(err=>console.log("haha",err)
 )
 setLoader(false)
 }).catch(err=>{
-  
-  console.log(err)
+  if (err.code === "auth/email-already-in-use") {
+    toast.error("Email already exists! Please log in instead.");
+     setLoader(false);
+  }
+/*   console.log(err) */
 })
 
     }
@@ -145,9 +148,11 @@ setLoader(false);
     }else{
     return (
       <motion.div
-      initial={{ opacity: 0, x: -50 }} // start left and invisible
-      animate={{ opacity: 1, x: 0 }}   // move to original position and fade in
-      transition={{ duration: 1, ease: "easeOut" }} className="flex justify-center items-center min-h-screen px-4 sm:px-6 lg:px-8 shadow-[#FAC921] py-4">
+        initial={{ opacity: 0, x: -50 }} 
+        animate={{ opacity: 1, x: 0 }} 
+        transition={{ duration: 1, ease: "easeOut" }}
+        className="flex justify-center items-center min-h-screen px-4 sm:px-6 lg:px-8 shadow-[#FAC921] py-4"
+      >
         <div className="w-full max-w-md  shadow-2xl shadow-[#FAC921]! rounded-3xl p-6 sm:p-10">
           <form onSubmit={hndlesubmitBtn}>
             <div className="text-center mb-6">
@@ -219,7 +224,7 @@ setLoader(false);
             <span
               type="button"
               onClick={googleSignUpHandler}
-              className="flex items-center justify-center gap-2 py-2 px-4 mb-5 w-full bg-white border border-gray-300 hover:bg-gray-100 text-gray-700 text-sm font-medium rounded-lg shadow-sm transition duration-200"
+              className="flex items-center cursor-pointer justify-center gap-2 py-2 px-4 mb-5 w-full bg-white border border-gray-300 hover:bg-gray-100 text-gray-700 text-sm font-medium rounded-lg shadow-sm transition duration-200"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -248,7 +253,10 @@ setLoader(false);
             </span>
 
             {/* Submit */}
-            <button type="submit" className="py-2 px-4 w-full hover:scale-105!">
+            <button
+              type="submit"
+              className="py-2 px-4 w-full hover:scale-105! cursor-pointer"
+            >
               Register
             </button>
 

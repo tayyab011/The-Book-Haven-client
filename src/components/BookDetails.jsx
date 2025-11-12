@@ -49,10 +49,7 @@ await specialaxios
   })
   .catch((err) => toast.error("someting went wrong"));
  }
-if (data?._id !==id) {
-  return <NotFound/>
-}
-else{
+
   return (
     <div>
       <div className="w-11/12 mx-auto my-10">
@@ -61,68 +58,66 @@ else{
             <img
               src={data?.coverImage}
               alt=""
-              className="w-50 h-80  object-cover rounded-xl"
+              className="w-50 h-80 object-cover rounded-xl"
             />
           </figure>
 
           <div className="card-body lg:w-1/2 space-y-3">
-            <h2 className="card-title md:text-5xl text-3xl  font-black gradient-text">
+            <h2 className="card-title md:text-5xl text-3xl font-black">
               {data?.title}
             </h2>
-            <p className="gradient-text font-bold md:text-lg text-base">
-              {" "}
+            <p className=" font-bold md:text-lg ">
               {data?.summary}
             </p>
 
-            <div className="">
+            <div>
               <p>
-                <span className="font-black md:text-lg text-base">Author:</span>{" "}
-                <span className="gradient-text font-bold md:text-lg text-base">
+                <span className="font-black md:text-lg ">Author:</span>{" "}
+                <span className=" font-bold md:text-lg ">
                   {data?.author}
                 </span>
               </p>
               <p>
-                <span className="font-black md:text-lg text-base">Genre:</span>{" "}
-                <span className="gradient-text font-bold md:text-lg text-base">
-                  {" "}
+                <span className="font-black md:text-lg ">Genre:</span>{" "}
+                <span className=" font-bold md:text-lg">
                   {data?.genre}
                 </span>
               </p>
               <p>
-                <span className="font-black md:text-lg text-base">
+                <span className="font-black md:text-lg ">
                   Ratings:
                 </span>{" "}
-                <span className="gradient-text font-bold md:text-lg text-base">
-                  ⭐ {data?.rating}
+                <span className=" font-bold md:text-lg">
+                  {data?.rating}
                 </span>
+                <div className=''>
+                  {data?.rating
+                    ? Array.from({ length: data.rating }).map((_, i) => (
+                        <span key={i}>⭐</span>
+                      ))
+                    : null}
+                </div>
               </p>
             </div>
 
             <div className="card-actions justify-start mt-6">
-              {/* <button
-                
-                  className="btn mt-4 gradient-button gradient-text"
-                >
-                  <span className="gradient-text"> Register</span>
-                </button> */}
-              {/*  <a className="btn btn-outline btn-secondary"></a> */}
-
               <button
                 onClick={() => navigate(`/`)}
-                className="btn  btn-xs! md:btn-lg! text-sm! px-6! py-4! md:px-6! md:text-base! hover:scale-105 "
+                className="btn btn-xs! md:btn-lg! text-sm! px-6! py-4! md:px-6! md:text-base! hover:scale-105"
               >
                 Back to Home
               </button>
             </div>
           </div>
         </div>
-        <div className="my-5 w-full block mx-auto">
-          <form onSubmit={commentData} className=" w-full ">
+
+        <div className="my-5 w-full mx-auto">
+          <form onSubmit={commentData} className="w-full">
             <div>
               <textarea
                 name="comment"
                 placeholder="comment Here"
-                className="textarea textarea-accent  md:w-1/2 w-full mx-auto"
+                className="textarea textarea-accent md:w-1/2 w-full mx-auto"
                 required
               ></textarea>
             </div>
@@ -130,7 +125,9 @@ else{
               Comment
             </button>
           </form>
-          <div className="space-y-6 md:w-1/4">
+
+
+          <div className="space-y-6 md:w-1/2 mx-auto">
             {comment?.map((data, index) => (
               <div
                 key={index}
@@ -164,7 +161,7 @@ else{
       </div>
     </div>
   );
-}
+
 };
 
 export default BookDetails;
