@@ -1,53 +1,52 @@
-import React, { useEffect, useState } from 'react';
-import useAxios from '../hooks/useAxios';
-import { Link, useNavigate } from 'react-router';
-import { use } from 'react';
-import { AuthContext } from '../provider/AuthContext';
-import Loader from './Loader';
-import NoBooks from './NoBooks';
-import { motion } from 'framer-motion';
+import React, { useEffect, useState } from "react";
+import useAxios from "../hooks/useAxios";
+import { Link, useNavigate } from "react-router";
+import { use } from "react";
+import { AuthContext } from "../provider/AuthContext";
+import Loader from "./Loader";
+import NoBooks from "./NoBooks";
+import { motion } from "framer-motion";
 
 const AllBooks = () => {
-  const {loader}=use(AuthContext)
-  const [sort,setSort]=useState("")
-    const navigate=useNavigate()
-    const axiosUse=useAxios()
-    const [book,setBook]=useState([])
-useEffect(() => {
-  const fetchBooks = async () => {
-    try {
-      const bookData = await axiosUse.get("/books");
-      console.log(bookData?.data?.result);
-      setBook(bookData?.data?.result);
-    } catch (error) {
-      console.error(error); 
+  const { loader } = use(AuthContext);
+  const [sort, setSort] = useState("");
+  const navigate = useNavigate();
+  const axiosUse = useAxios();
+  const [book, setBook] = useState([]);
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const bookData = await axiosUse.get("/books");
+        console.log(bookData?.data?.result);
+        setBook(bookData?.data?.result);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchBooks();
+  }, [axiosUse]);
+
+  const sortHandler = async (data) => {
+    if (data === "lowertoupper") {
+      setSort("Low - High");
+
+      await fetch("https://the-book-heavens.vercel.app/booksSortedAssending")
+        .then((res) => res.json())
+        .then((data) => console.log("after sorting", setBook(data.result)));
+    }
+
+    if (data === "uppertolower") {
+      setSort("High-Low");
+      await fetch("https://the-book-heavens.vercel.app/booksSortedDissending")
+        .then((res) => res.json())
+        .then((data) => console.log("after sorting", setBook(data.result)));
     }
   };
 
-  fetchBooks();
-}, [axiosUse]);
-
-const sortHandler = async (data) => {
-  if (data === "lowertoupper") {
-    setSort("Low - High");
-
-await fetch("http://localhost:5050/booksSortedAssending")
-  .then((res) => res.json())
-  .then((data) => console.log("after sorting", setBook(data.result)));
-  
-  }
-
-  if (data === "uppertolower") {
-    setSort("High-Low");
- await fetch("http://localhost:5050/booksSortedDissending")
-   .then((res) => res.json())
-   .then((data) => console.log("after sorting", setBook(data.result)));
-  }  
-}
-
-if (loader) {
-  return <Loader/>
-}else{
+  if (loader) {
+    return <Loader />;
+  } else {
     return (
       <div className={`w-11/12 mx-auto  my-5 overflow-x-auto `}>
         <div className="overflow-x-auto w-full">
@@ -76,9 +75,11 @@ if (loader) {
             <NoBooks />
           ) : (
             <motion.table
-      initial={{ opacity: 0, x: 50 }}   // start right and invisible
-      animate={{ opacity: 1, x: 0 }}    // move to original position and fade in
-      transition={{ duration: 1, ease: "easeOut" }}className="table w-full min-w-[600px] font-semibold">
+              initial={{ opacity: 0, x: 50 }} // start right and invisible
+              animate={{ opacity: 1, x: 0 }} // move to original position and fade in
+              transition={{ duration: 1, ease: "easeOut" }}
+              className="table w-full min-w-[600px] font-semibold"
+            >
               {/* head */}
               <thead className="text-[#FAC921] font-black md:text-xl">
                 <tr>
@@ -122,7 +123,6 @@ if (loader) {
         </div>
       </div>
     );
-
   }
 };
 

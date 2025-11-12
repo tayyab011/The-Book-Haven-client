@@ -1,11 +1,10 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://localhost:5050",
-
+  baseURL: "https://the-book-heavens.vercel.app",
 });
 
-const useAxios=()=>{
-    return instance
-}
+const useAxios = () => {
+  return instance;
+};
 export default useAxios;

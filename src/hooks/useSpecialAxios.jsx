@@ -4,12 +4,12 @@ import { AuthContext } from "../provider/AuthContext";
 import { useNavigate } from "react-router";
 
 const specialInstance = axios.create({
-  baseURL: "http://localhost:5050",
+  baseURL: "https://the-book-heavens.vercel.app",
 });
 
 const useSpecialAxios = () => {
-const navigate=useNavigate()
-    const { user, logout } = use(AuthContext);
+  const navigate = useNavigate();
+  const { user, logout } = use(AuthContext);
   useEffect(() => {
     //for request
     if (user?.accessToken) {
@@ -35,21 +35,14 @@ const navigate=useNavigate()
         }
       );
 
-
-
-//for unmount
-return () => {
-  specialInstance.interceptors.request.eject(requestInterceptor);
-  specialInstance.interceptors.response.eject(responseInterceptor);
-};
-
-
+      //for unmount
+      return () => {
+        specialInstance.interceptors.request.eject(requestInterceptor);
+        specialInstance.interceptors.response.eject(responseInterceptor);
+      };
     }
-
-   
-    
   }, [user, logout, navigate]);
-     return specialInstance; 
+  return specialInstance;
 };
 
 export default useSpecialAxios;

@@ -2,7 +2,7 @@ import { StrictMode, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router";
-import  { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import RootLayout from "./Layout/RootLayout.jsx";
 import Home from "./components/Home.jsx";
 
@@ -10,16 +10,14 @@ import AuthProvider from "./provider/AuthProvider.jsx";
 import Login from "./components/Login";
 import Register from "./components/Register.jsx";
 import AddBook from "./components/AddBook.jsx";
-import AllBooks from './components/AllBooks';
-import BookDetails from './components/BookDetails';
-import AddMyBooks from './components/AddMyBooks';
+import AllBooks from "./components/AllBooks";
+import BookDetails from "./components/BookDetails";
+import AddMyBooks from "./components/AddMyBooks";
 import PrivateRoute from "./Layout/PrivateRoute.jsx";
 import UpdateBook from "./components/UpdateBook.jsx";
 import Loader from "./components/Loader.jsx";
-import NotFound from './components/NotFound';
+import NotFound from "./components/NotFound";
 import ScrollToTop from "react-scroll-to-top";
-
-
 
 const router = createBrowserRouter([
   {
@@ -29,7 +27,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        loader: () => fetch("http://localhost:5050/booksSorted"),
+        loader: () => fetch("https://the-book-heavens.vercel.app/booksSorted"),
         element: <Home />,
       },
       {
@@ -81,12 +79,11 @@ const router = createBrowserRouter([
       },
       {
         path: "*",
-        element: <NotFound/>,
+        element: <NotFound />,
       },
     ],
   },
 ]);
-
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
